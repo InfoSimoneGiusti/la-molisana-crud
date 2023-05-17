@@ -40,17 +40,19 @@ class PastaController extends Controller
         //dd($form_data);
 
         $newPasta = new Pasta();
-        $newPasta->src = $form_data["src"];
+
+        /*$newPasta->src = $form_data["src"];
         $newPasta->title = $form_data["title"];
         $newPasta->kind = $form_data["kind"];
         $newPasta->cooking_time = $form_data["cooking_time"];
         $newPasta->weight = $form_data["weight"];
-        $newPasta->description = $form_data["description"];
+        $newPasta->description = $form_data["description"];*/
+
+        $newPasta->fill($form_data);
+
         $newPasta->save();
 
         return redirect()->route('pastas.show', ['pasta' => $newPasta->id]);
-
-
 
     }
 
@@ -60,11 +62,10 @@ class PastaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Pasta $pasta)
     {
-        $pasta = Pasta::findOrFail($id);
+        //$pasta = Pasta::findOrFail($id);
         return view('pastas.show', compact('pasta'));
-
     }
 
     /**
@@ -73,9 +74,10 @@ class PastaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Pasta $pasta)
     {
-        //
+        //$pasta = Pasta::findOrFail($id);
+        return view('pastas.edit', compact('pasta'));
     }
 
     /**
@@ -85,9 +87,12 @@ class PastaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Pasta $pasta)
     {
-        //
+        //$pasta = Pasta::findOrFail($id);
+        $form_data = $request->all();
+        $pasta->update($form_data);
+        return redirect()->route('pastas.show', ['pasta' => $pasta->id]);
     }
 
     /**
@@ -96,8 +101,10 @@ class PastaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Pasta $pasta)
     {
-        //
+        //$pasta = Pasta::findOrFail($id);
+        $pasta->delete();
+        return redirect()->route('pastas.index');
     }
 }

@@ -21,8 +21,16 @@
                 <td scope="row">{{$pasta->id}}</td>
                 <td>{{$pasta->title}}</td>
                 <td>{{$pasta->weight}}</td>
-                <td>
-                    <a class="btn btn-primary" href="{{route('pastas.show', ['pasta' => $pasta->id])}}">Vedi</a>
+                <td class="d-flex">
+                    <a class="btn btn-primary me-2" href="{{route('pastas.show', ['pasta' => $pasta->id])}}">Vedi</a>
+                    <a class="btn btn-warning me-2" href="{{route('pastas.edit', ['pasta' => $pasta->id])}}">Modifica</a>
+
+                    <form action="{{route('pastas.destroy', ['pasta' => $pasta->id])}}" method="POST">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-danger">Elimina</button>
+                    </form>
+
                 </td>
             </tr>
         @endforeach
