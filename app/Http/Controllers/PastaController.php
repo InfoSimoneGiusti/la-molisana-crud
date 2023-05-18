@@ -36,6 +36,17 @@ class PastaController extends Controller
      */
     public function store(Request $request)
     {
+
+        $request->validate([
+            'src' => 'required|url|max:255',
+            'title' => 'required|max:50',
+            'kind' => 'required|max:20',
+            'cooking_time' => 'required|max:10',
+            'weight' => 'required|max:10',
+            'description' => 'nullable|max:65535',
+        ]);
+
+
         $form_data = $request->all();
         //dd($form_data);
 
@@ -52,7 +63,7 @@ class PastaController extends Controller
 
         $newPasta->save();
 
-        return redirect()->route('pastas.show', ['pasta' => $newPasta->id]);
+        return redirect()->route('pastas.show', ['pasta' => $newPasta->id])->with('status', 'Formato di pasta aggiunto con successo');
 
     }
 
@@ -89,10 +100,22 @@ class PastaController extends Controller
      */
     public function update(Request $request, Pasta $pasta)
     {
+
+        $request->validate([
+            'src' => 'required|url|max:255',
+            'title' => 'required|max:50',
+            'kind' => 'required|max:20',
+            'cooking_time' => 'required|max:10',
+            'weight' => 'required|max:10',
+            'description' => 'nullable|max:65535',
+        ]);
+
+
         //$pasta = Pasta::findOrFail($id);
         $form_data = $request->all();
         $pasta->update($form_data);
-        return redirect()->route('pastas.show', ['pasta' => $pasta->id]);
+        //return redirect()->route('pastas.show', ['pasta' => $pasta->id]);
+        return to_route('pastas.show', ['pasta' => $pasta->id])->with('status', 'Formato di pasta aggiornato!');
     }
 
     /**
