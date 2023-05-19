@@ -8,7 +8,8 @@ use Illuminate\Http\Request;
 class PageController extends Controller
 {
     public function index() {
-        return redirect()->route('pastas.index');
+        //return redirect()->route('pastas.index');
+        return view('welcome');
     }
 
 }

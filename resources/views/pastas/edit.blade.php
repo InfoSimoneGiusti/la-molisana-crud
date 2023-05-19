@@ -33,7 +33,13 @@
 
         <div class="mb-3">
             <label for="kind" class="form-label">Tipo di pasta:</label>
-            <input type="text" class="form-control @error('kind') is-invalid @enderror" id="kind" name="kind" value="{{old('kind', $pasta->kind)}}">
+
+            <select name="kind" class="form-control @error('kind') is-invalid @enderror" id="kind">
+                <option @selected (old('kind', $pasta->kind) == 'corta') value="corta">Corta</option>
+                <option @selected (old('kind', $pasta->kind) == 'lunga') value="lunga">Lunga</option>
+                <option @selected (old('kind', $pasta->kind) == 'lunghissima') value="lunghissima">Lunghissima</option>
+            </select>
+
             @error('kind')
                 <div class="invalid-feedback">
                     {{ $message }}
